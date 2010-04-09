@@ -60,6 +60,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'celery',
     'django_extensions',
+    'tagging',
 )
 
 try:
