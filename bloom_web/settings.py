@@ -62,6 +62,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'tagging',
     'bloom',
+    'staticfiles',
 )
 
 try:
