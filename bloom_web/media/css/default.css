@@ -10,7 +10,14 @@ body {
     margin-left: 20px;
     margin-bottom: -15px;
     font-weight: 400;
+}
 
+.smalltitle {
+    color: #AEF100;
+    font-size:.4em;
+    letter-spacing: -2px;
+    margin-left: 10px;
+    text-transform: lowercase;
 }
 
 .links{
@@ -46,7 +53,7 @@ body {
     background-color: #FFFFFF;
     border:2px solid #CCCCCC;
     overflow:auto;
-    padding: 0px;
+    padding: 20px;
 }
 
 .content p {
@@ -61,7 +68,11 @@ body {
     margin-right: auto ;
 }
 .content .game {
+<<<<<<< HEAD
     margin-bottom: 5px;
+=======
+    margin-bottom: 10px;
+>>>>>>> master
 }
 .content .tags{
     font-style: italic;

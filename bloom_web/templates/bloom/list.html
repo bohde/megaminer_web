@@ -1,12 +1,11 @@
 {% extends "base.html" %}
 {% block title %}Game Logs{% endblock %}
+{% block head %}<a class="smalltitle" href="{% url logout %}">{{user.username}}</a>{% endblock %}
 {% block content %}
-<ul>
 {% for log in logs %}
 <div class="game">
   <a href="{{ log.file.url }}">{{log}} ({{log.win_status}})</a>
   <div class="tags">{% for tag in log.tags %} {{tag}} {% endfor %}</div>
 </div>
 {% endfor %}
-</ul>
 {% endblock %}
