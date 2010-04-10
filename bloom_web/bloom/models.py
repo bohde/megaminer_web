@@ -36,22 +36,26 @@ def md5_for_file(file_name, block_size=2**20):
 def read_tag_file(file_name):
     with open(file_name) as f:
         lines = f.readlines()
-        num, p1_name, p2_name = lines[0][0:-1].split(', ')
+        num, p1_name, p2_name, winner_index = lines[0][0:-1].split(', ')
         num = int(num)
+        winner_index = int(winner_index)
 
         p1_name = string.replace(p1_name, ' ', '')
         p2_name = string.replace(p2_name, ' ', '')
 
-        p1 = GamePlayerInfo.objects.create(player=(User.objects.get(username__iexact=p1_name)))
+        p1 = GamePlayerInfo.objects.create(player=(User.objects.get(username__iexact=p1_name)),
+                                           winner=(winner_index==0))
         Tag.objects.update_tags(p1, lines[1])
 
-        p2 = GamePlayerInfo.objects.create(player=(User.objects.get(username__iexact=p2_name)))
+        p2 = GamePlayerInfo.objects.create(player=(User.objects.get(username__iexact=p2_name)),
+                                           winner=(winner_index==1))
         Tag.objects.update_tags(p2, lines[2])
 
         return num, p1, p2
 
 class GamePlayerInfo(models.Model):
     player = models.ForeignKey(User)
+    winner = models.BooleanField()
     
 class GameLog(models.Model):
     game_hash = models.CharField(max_length=256)
