@@ -64,6 +64,7 @@ INSTALLED_APPS = (
     'bloom',
     'gunicorn',
     'staticfiles',
+    'south',
 )
 
 LOGIN_REDIRECT_URL = "/"

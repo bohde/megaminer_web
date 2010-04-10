@@ -53,6 +53,9 @@ def read_tag_file(file_name):
 
         return num, p1, p2
 
+class Stats(models.Model):
+    pass
+
 class GamePlayerInfo(models.Model):
     player = models.ForeignKey(User)
     winner = models.BooleanField()
