@@ -2,3 +2,5 @@ celery
 django_extensions
 django-tagging
 gunicorn
+django-staticfiles
+
