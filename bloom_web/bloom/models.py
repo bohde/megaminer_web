@@ -56,6 +56,9 @@ def read_tag_file(file_name):
 class GamePlayerInfo(models.Model):
     player = models.ForeignKey(User)
     winner = models.BooleanField()
+
+    def __unicode__(self):
+        return "%s (%u)" % (self.player.username, self.pk)
     
 class GameLog(models.Model):
     game_hash = models.CharField(max_length=256)
@@ -63,6 +66,9 @@ class GameLog(models.Model):
     number = models.IntegerField()
     p1 = models.OneToOneField(GamePlayerInfo, related_name='p1_log_set')
     p2 = models.OneToOneField(GamePlayerInfo, related_name='p2_log_set')
+
+    def __unicode__(self):
+        return "%s vs. %s" % (self.p1.player.username, self.p2.player.username)
 
     @classmethod
     def mine(cls, user):
