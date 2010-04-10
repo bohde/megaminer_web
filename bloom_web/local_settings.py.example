@@ -1,0 +1,32 @@
+# Local Settings for this project
+
+DEBUG = True
+TEMPLATE_DEBUG = DEBUG
+
+ADMINS = (
+    # ('foo', 'test@example.com'),
+)
+
+MANAGERS = ADMINS
+
+DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+DATABASE_NAME = 'test_db'             # Or path to database file if using sqlite3.
+DATABASE_USER = ''             # Not used with sqlite3.
+DATABASE_PASSWORD = ''         # Not used with sqlite3.
+DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
+DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
+
+
+# Make this unique, and don't share it with anybody.
+SECRET_KEY = 'somethingsecret!"
+
+
+BROKER_HOST = "localhost"
+BROKER_PORT = 5672
+BROKER_USER = "myuser"
+BROKER_PASSWORD = "mypass"
+BROKER_VHOST = "myvhost"
+
+BLOOM_IN_PATH="/tmp/bloom/in"
+BLOOM_OUT_PATH="/tmp/bloom/out"
+BLOOM_MEDIA_PATH="/logs/"
