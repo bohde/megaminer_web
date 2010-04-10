@@ -104,4 +104,3 @@ class GameLog(models.Model):
         gl.save()
         return gl
 
-    
