@@ -78,7 +78,7 @@ class GameLog(models.Model):
             return None
 
     @staticmethod
-    def objects_with_tags(user):
+    def my_objects(user):
         objs = GameLog.mine(user)
         def add_tags(qs):
             for q in qs:
@@ -97,6 +97,22 @@ class GameLog(models.Model):
                 yield q
             return
         return add_win_status(add_tags(objs))
+
+    @staticmethod
+    def objects_with_tags():
+        objs = GameLog.objects.all()
+        def add_tags(qs):
+            for q in qs:
+                q.tags = set(itertools.chain.from_iterable(p.tags for p in [q.p1, q.p2]))
+                yield q
+            return
+        def winner(qs):
+            for q in qs:
+                q.win_status = q.p1.player.username if q.p1.winner else p.p2.player.username
+                yield q
+            return
+        return winner(add_tags(objs))
+    
 
     @staticmethod
     def create_new(log_file, tag_file):
