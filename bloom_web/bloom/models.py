@@ -108,7 +108,7 @@ class GameLog(models.Model):
             return
         def winner(qs):
             for q in qs:
-                q.win_status = q.p1.player.username if q.p1.winner else p.p2.player.username
+                q.win_status = q.p1.player.username if q.p1.winner else q.p2.player.username
                 yield q
             return
         return winner(add_tags(objs))
