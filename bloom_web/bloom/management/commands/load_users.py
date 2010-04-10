@@ -16,7 +16,7 @@ class Command(BaseCommand):
                         try:
                             User.objects.get(username=user)
                             print "%s already exists, not adding." % user
-                        except User.NotFound:
+                        except User.DoesNotExist:
                             print "Adding new user %s" % user
                             u = User.objects.create_user(user, 'test@example.com', password)
                             u.save()
