@@ -63,6 +63,7 @@ INSTALLED_APPS = (
     'tagging',
     'bloom',
     'staticfiles',
+    'south',
 )
 
 LOGIN_REDIRECT_URL = "/"
