@@ -44,10 +44,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
-
-INTERNAL_IPS = ('127.0.0.1',)
 
 ROOT_URLCONF = 'bloom_web.urls'
 
@@ -65,8 +62,8 @@ INSTALLED_APPS = (
     'django_extensions',
     'tagging',
     'bloom',
-    'debug_toolbar',
     'gunicorn',
+    'staticfiles',
 )
 
 try:
