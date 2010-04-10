@@ -79,7 +79,18 @@ class GameLog(models.Model):
                 q.tags = set(itertools.chain.from_iterable(p.tags for p in [q.p1, q.p2] if p.player==user))
                 yield q
             return
-        return add_tags(objs)
+        def add_win_status(qs):
+            for q in qs:
+                if q.p1.player==user and q.p2.player==user:
+                    q.win_status = "tie"
+                else:
+                    if q.p1.player==user:
+                        q.win_status = ["loss", "win"][q.p1.winner]
+                    else:
+                        q.win_status = ["win", "loss"][q.p1.winner]
+                yield q
+            return
+        return add_win_status(add_tags(objs))
 
     @staticmethod
     def create_new(log_file, tag_file):
