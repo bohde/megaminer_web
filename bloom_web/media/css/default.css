@@ -1,0 +1,181 @@
+body {
+    background-color: #444444;
+}
+
+.title {
+    text-align: center;
+    font-family: Helvetica, Verdana, Arial, sans-serif;
+    letter-spacing: -4px;
+    font-size:2.0em;
+    color: #AEF100;
+    height: 15%;
+}
+
+.links{
+    width: 724px;
+    margin-left: auto ;
+    margin-right: auto ;
+}
+
+.links .left {
+    margin: -14px 0 0 0;
+    padding: 0 0 0 0;
+}
+
+.links .left li {
+    display: inline;
+    border: 1px solid #719D00;
+    margin: 0 0 0 0;
+}
+
+.links .left a {
+    background-color: #D2F870;
+    color: #444444;
+    text-align: center;
+    font-size:1.1em;
+    padding: 0 4px 0 4px;
+    text-decoration:none;
+}
+
+.content{
+    width: 720px;
+    min-height: 500px;
+    margin-left: auto ;
+    margin-right: auto ;
+    background-color: #FFFFFF;
+    border:2px solid #719D00;
+    overflow:auto;
+    padding: 0px;
+}
+
+.content p {
+    text-align: center;
+    margin-left: auto ;
+    margin-right: auto ;
+    font-size:2.0em;
+}
+
+.content ul {
+    text-align: center;
+    margin-left: auto ;
+    margin-right: auto ;
+}
+
+.content a {
+    background-color: #D2F870;
+    color: #444444;
+}
+
+ul.errorlist {
+    margin: 0;
+    padding: 0;
+}
+.errorlist li {
+    color: red;
+    display: block;
+    font-size: 10px;
+    margin: 0 0 3px;
+    padding: 4px 5px;
+}
+.report {
+    margin-top:50px;
+    width: 590px;
+    padding: 0 0 0 4px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #444444;
+}
+
+.report p{
+    text-size: 1em;
+    margin-bottom:0;
+}
+
+.report .chart{
+    float:left;
+    margin:0;
+    padding:0;
+    width:75%;
+}
+.report .inner{
+    margin-top:45px;
+    margin-right:-25px;
+    font-weight:bold;
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+    float:left;
+}
+
+.report table{
+    width: 100%;
+    text-align: center;
+    margin-left: auto ;
+    margin-right: auto ;
+    color: #444444;
+}
+
+.report table td{
+    width:20%;
+}
+
+.report .low {
+     background-color: #D2F870;
+}
+.report .med {
+     background-color: #FFFD87;
+}
+.report .high {
+     background-color: #F70542;
+}
+
+.protip {
+    top: 0px;
+    font-size: .6em;
+    font-style: italic;
+    text-align: center;
+}
+
+.functions{
+    width: 110px;
+    font-size: .6em;
+    float: left;
+    margin: 0px 4px;
+    text-align: center;
+    padding: 10px 8px;
+    color: #333333;
+}
+
+.functions ul{
+    list-style-type: none;
+    padding: 0;
+}
+
+.functions lh{
+    font-weight: bold;
+}
+
+.functions li {
+    margin-top: 3px;
+}
+
+.none {
+    list-style-type: none;
+    margin:0;
+}
+
+.none li{
+    text-align:left;
+    padding:2px 0;
+}
+
+.helptext {
+    padding:0 30px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.helptext h3 {
+    margin:30px 0 0 0;
+    padding:0;
+}

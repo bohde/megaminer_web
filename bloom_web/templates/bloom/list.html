@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Game Logs{% endblock %}
+{% block content %}
+<ul>
+{% for log in logs %}
+<li><a href="{{ log.file.url }}">{{log.game_hash}}</a> {{log.p1.tags}} {{log.p2.tags}}</li>
+{% endfor %}
+</ul>
+{% endblock %}
