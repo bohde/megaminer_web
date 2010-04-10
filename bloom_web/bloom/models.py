@@ -10,6 +10,7 @@ import shutil
 import string
 import os
 import logging
+import itertools
 logging.basicConfig(level=logging.DEBUG)
 
 
@@ -59,6 +60,23 @@ class GameLog(models.Model):
     p1 = models.OneToOneField(GamePlayerInfo, related_name='p1_log_set')
     p2 = models.OneToOneField(GamePlayerInfo, related_name='p2_log_set')
 
+    @classmethod
+    def mine(cls, user):
+        try:
+            return cls.objects.filter(models.Q(p1__player=user) | models.Q(p2__player=user)).select_related()
+        except GameLog.DoesNotExist:
+            return None
+
+    @staticmethod
+    def objects_with_tags(user):
+        objs = GameLog.mine(user)
+        def add_tags(qs):
+            for q in qs:
+                q.tags = set(itertools.chain.from_iterable(p.tags for p in [q.p1, q.p2] if p.player==user))
+                yield q
+            return
+        return add_tags(objs)
+
     @staticmethod
     def create_new(log_file, tag_file):
         game_hash = md5_for_file(log_file)
@@ -79,9 +97,7 @@ class GameLog(models.Model):
                      p1=p1,
                      p2=p2)
         gl.file.name = '%s.gamelog'%game_hash
-        logging.debug(gl.file.storage.base_url)
-        logging.debug("name: %s, path: %s, url: %s" % (gl.file.name, gl.file.path, gl.file.url))
-
         gl.save()
         return gl
 
+    
