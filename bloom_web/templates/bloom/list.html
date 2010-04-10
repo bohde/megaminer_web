@@ -3,8 +3,10 @@
 {% block content %}
 <ul>
 {% for log in logs %}
-<li><a href="{{ log.file.url }}">{{log.game_hash}}</a> <br/>
-{% for tag in log.tags %} {{tag}} {% endfor %}</li>
+<div class="game">
+  <a href="{{ log.file.url }}">{{log}} ({{log.win_status}})</a>
+  <div class="tags">{% for tag in log.tags %} {{tag}} {% endfor %}</div>
+</div>
 {% endfor %}
 </ul>
 {% endblock %}
