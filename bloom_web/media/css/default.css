@@ -56,6 +56,10 @@ body {
     text-align: center;
 }
 
+.content .users .tiny{
+    font-size: .5em;
+}
+
 .content .game {
     margin-bottom: 10px;
 }

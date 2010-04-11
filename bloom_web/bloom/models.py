@@ -64,6 +64,9 @@ class UserStat(models.Model):
     def __unicode__(self):
         return "%s (%u/%u)" % (self.user.username, self.wins, self.games)
 
+    class Meta:
+        ordering = ("-wins", "-games")
+
     @staticmethod
     def populate_stats():
         for user in User.objects.all():
