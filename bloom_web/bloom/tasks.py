@@ -33,10 +33,10 @@ class BloomProcessFiles(PeriodicTask):
             logger.debug("Looking at file %s" % tag_file)
             game_file = os.path.join(in_dir,string.replace(tag_file, '.tags', '.gamelog'))
             tag_file = os.path.join(in_dir, tag_file)
-            process_individual_file.delay(tag_file, game_file)
+            process_individual_file.delay(tag_file, game_file, logger)
                    
 @task
-def process_individual_file(tag_file, game_file):
+def process_individual_file(tag_file, game_file, logger):
     gl = GameLog.create_new(game_file, tag_file)
     if gl:
         logger.debug("Game %u created." % gl.number)
