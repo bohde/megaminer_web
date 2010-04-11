@@ -110,8 +110,36 @@ class GameLog(models.Model):
     def mine(cls, user):
         try:
             return cls.objects.filter(models.Q(p1__player=user) | models.Q(p2__player=user)).select_related()
-        except GameLog.DoesNotExist:
+        except cls.DoesNotExist:
             return None
+
+    @classmethod
+    def ours(cls, me, them):
+        try:
+            return cls.objects.filter(models.Q(p1__player=me, p2__player=them) |
+                                      models.Q(p1__player=them, p2__player=me)).select_related()
+        except cls.DoesNotExist:
+            return None
+
+    @staticmethod
+    def ours_with_data(me, them):
+        def add_win_status(qs):
+            for q in qs:
+                if q.p1.player==me:
+                    q.win_status = ["loss", "win"][q.p1.winner]
+                else:
+                    q.win_status = ["win", "loss"][q.p1.winner]
+                yield q
+            return
+        def add_tags(qs):
+            for q in qs:
+                if q.p1.player==me:
+                    q.tags = q.p1.tags
+                else:
+                    q.tags = q.p2.tags
+                yield q
+            return
+        return add_win_status(add_tags(GameLog.ours(me, them)))
 
     @staticmethod
     def mine_with_win(user):

@@ -6,6 +6,8 @@
   <a class="{{log.win_status}}" href="{{ log.file.url }}">{{log}}</a>
   <div class="tags">A {{log.win_status}} at {{ log.timestamp.time|time:"H:i" }}.</div>
   <div class="tags">Tagged with{% for tag in log.tags %} <a href="#">{{tag}}</a>{% endfor %}.</div>
+  <div class="tags">Games with <a href="{% url versus log.p1.player.pk %}">{{ log.p1.player.username }}</a>
+   <a href="{% url versus log.p2.player.pk %}">{{ log.p2.player.username }}</a> 
 </div>
 {% endfor %}
 {% endblock %}
