@@ -123,48 +123,37 @@ class GameLog(models.Model):
 
     @staticmethod
     def ours_with_data(me, them):
-        def add_win_status(qs):
-            for q in qs:
-                if q.p1.player==me:
+        with_tags = GameLog.add_tags(GameLog.ours(me, them),me)
+        return GameLog.add_win_status(with_tags, me)
+    
+    @staticmethod
+    def add_win_status(qs, user):
+        for q in qs:
+            if q.p1.player==user and q.p2.player==user:
+                q.win_status = "tie"
+            else:
+                if q.p1.player==user:
                     q.win_status = ["loss", "win"][q.p1.winner]
                 else:
                     q.win_status = ["win", "loss"][q.p1.winner]
-                yield q
-            return
-        def add_tags(qs):
-            for q in qs:
-                if q.p1.player==me:
-                    q.tags = q.p1.tags
-                else:
-                    q.tags = q.p2.tags
-                yield q
-            return
-        return add_win_status(add_tags(GameLog.ours(me, them)))
+            yield q
+        return
+    
+    @staticmethod
+    def add_tags(qs, user):
+        for q in qs:
+            q.tags = set(itertools.chain.from_iterable(p.tags for p in [q.p1, q.p2] if p.player==user))
+            yield q
+        return
 
     @staticmethod
     def mine_with_win(user):
-        def add_win_status(qs):
-            for q in qs:
-                if q.p1.player==user and q.p2.player==user:
-                    q.win_status = "tie"
-                else:
-                    if q.p1.player==user:
-                        q.win_status = ["loss", "win"][q.p1.winner]
-                    else:
-                        q.win_status = ["win", "loss"][q.p1.winner]
-                yield q
-            return
-        return add_win_status(GameLog.mine(user))
+        return GameLog.add_win_status(GameLog.mine(user), user)
 
     @staticmethod
     def my_objects(user):
         objs = GameLog.mine_with_win(user)
-        def add_tags(qs):
-            for q in qs:
-                q.tags = set(itertools.chain.from_iterable(p.tags for p in [q.p1, q.p2] if p.player==user))
-                yield q
-            return
-        return add_tags(objs)
+        return GameLog.add_tags(objs, user)
 
     @staticmethod
     def objects_with_tags():
