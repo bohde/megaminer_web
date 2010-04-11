@@ -2,9 +2,9 @@ from django.contrib import admin
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
-from tagging.models import Tag
 from django.core.files import File
 from django.core.files.storage import FileSystemStorage
+from tagging.models import Tag,TaggedItem
 import hashlib
 import shutil
 import string
@@ -125,6 +125,20 @@ class GameLog(models.Model):
     def ours_with_data(me, them):
         with_tags = GameLog.add_tags(GameLog.ours(me, them),me)
         return GameLog.add_win_status(with_tags, me)
+
+    @staticmethod
+    def mine_with_tag(me, tag):
+        my_logs = GameLog.mine(me)
+        with_tags = GameLog.add_tags(my_logs, me)
+        filtered = itertools.ifilter(lambda l: tag in l.tags, with_tags)
+        return GameLog.add_win_status(filtered, me)
+
+    @staticmethod
+    def all_with_tag(tag):
+        my_logs = GameLog.objects.all().select_related()
+        with_tags = GameLog.combine_tags(my_logs)
+        filtered = itertools.ifilter(lambda l: tag in l.tags, with_tags)
+        return GameLog.winner(filtered)
     
     @staticmethod
     def add_win_status(qs, user):
@@ -156,19 +170,23 @@ class GameLog(models.Model):
         return GameLog.add_tags(objs, user)
 
     @staticmethod
+    def combine_tags(qs):
+        for q in qs:
+            q.tags = set(itertools.chain.from_iterable(p.tags for p in [q.p1, q.p2]))
+            yield q
+        return
+
+    @staticmethod
+    def winner(qs):
+        for q in qs:
+            q.win_status = q.p1.player.username if q.p1.winner else q.p2.player.username
+            yield q
+        return
+
+    @staticmethod
     def objects_with_tags():
         objs = GameLog.objects.all()
-        def add_tags(qs):
-            for q in qs:
-                q.tags = set(itertools.chain.from_iterable(p.tags for p in [q.p1, q.p2]))
-                yield q
-            return
-        def winner(qs):
-            for q in qs:
-                q.win_status = q.p1.player.username if q.p1.winner else q.p2.player.username
-                yield q
-            return
-        return winner(add_tags(objs))
+        return GameLog.winner(GameLog.combine_tags(objs))
     
 
     @staticmethod
