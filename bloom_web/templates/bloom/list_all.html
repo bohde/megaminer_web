@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Game Logs{% endblock %}
+{% block content %}
+{% for log in logs %}
+<div class="game">
+  <a class="win" href="{{ log.file.url }}">{{log}}</a>
+  <div class="tags">A win by {{log.win_status}} at {{ log.timestamp.time|time:"H:i" }}.</div>
+  <div class="tags">Tagged with{% for tag in log.tags %} <a href="#">{{tag}}</a>{% endfor %}.</div>
+</div>
+{% endfor %}
+{% endblock %}
