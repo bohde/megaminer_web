@@ -47,7 +47,7 @@ def process_individual_file(tag_file, game_file, logger):
         os.remove(game_file)
     except:
         pass
-    
+    return bool(gl)
 
 
 tasks.register(BloomProcessFiles)
