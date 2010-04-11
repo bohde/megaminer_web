@@ -1,5 +1,5 @@
 # Create your views here.
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from models import GameLog
 from django.contrib.auth.decorators import login_required, permission_required
@@ -29,3 +29,10 @@ def top_n_csv(request, n):
     writer = csv.writer(response)
     writer.writerow([u.username for u in users])
     return response
+
+def versus(request, their_pk):
+    them = get_object_or_404(User, pk=their_pk)
+    logs = GameLog.ours_with_data(request.user, them)
+    return render_to_response('bloom/list.html', {'logs':logs},
+                              context_instance=RequestContext(request))  
+    
