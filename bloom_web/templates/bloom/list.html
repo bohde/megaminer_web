@@ -7,5 +7,6 @@
   <a href="{{ log.file.url }}">{{log}} ({{log.win_status}})</a>
   <div class="tags">{% for tag in log.tags %} {{tag}} {% endfor %}</div>
 </div>
+<div class="right">Ratio: {{ user.stats.ratio }}%</div>
 {% endfor %}
 {% endblock %}
