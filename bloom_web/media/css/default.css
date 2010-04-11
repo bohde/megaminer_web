@@ -5,19 +5,24 @@ body {
 .title {
     font-family: Helvetica, Verdana, Arial, sans-serif;
     letter-spacing: -5px;
-    font-size:4.0em;
+    font-size:5.0em;
     color: #AEF100;
     margin-left: 20px;
     margin-bottom: -15px;
     font-weight: 400;
+    width: 760px;
+    padding: 0;
 }
 
 .smalltitle {
     color: #AEF100;
-    font-size:.4em;
+    font-size:.3em;
     letter-spacing: -2px;
-    margin-left: 10px;
+    margin-top: 52px;
+    margin-left:5px;
     text-transform: lowercase;
+    float: right;
+    bottom: 0;
 }
 
 .links{
@@ -67,6 +72,16 @@ body {
     margin-left: auto ;
     margin-right: auto ;
 }
+
+.content .users{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin-left: auto ;
+    margin-right: auto ;
+    color: #3C94BC;
+    font-size: 3em;
+    text-align: center;
+}
+
 .content .game {
     margin-bottom: 10px;
 }
