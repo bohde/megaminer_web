@@ -11,6 +11,7 @@ import string
 import os
 import logging
 import itertools
+import datetime
 logging.basicConfig(level=logging.DEBUG)
 
 
@@ -98,7 +99,7 @@ class GameLog(models.Model):
     number = models.IntegerField()
     p1 = models.OneToOneField(GamePlayerInfo, related_name='p1_log_set')
     p2 = models.OneToOneField(GamePlayerInfo, related_name='p2_log_set')
-
+    timestamp = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
     class Meta:
         ordering = ["-id"]
         
