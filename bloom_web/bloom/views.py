@@ -16,7 +16,7 @@ def index(request):
 @permission_required('bloom.view_all')
 def all_logs(request):
     logs = GameLog.objects_with_tags()
-    return render_to_response('bloom/list.html', {'logs':logs},
+    return render_to_response('bloom/list_all.html', {'logs':logs},
                               context_instance=RequestContext(request))  
 
 def top_n(request, n):
