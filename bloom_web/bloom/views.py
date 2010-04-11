@@ -18,6 +18,6 @@ def all_logs(request):
                               context_instance=RequestContext(request))  
 
 def top_n(request, n):
-    users = User.objects.select_related().order_by('stats__wins')[:n]
+    users = User.objects.select_related().order_by('-stats__wins')[:n]
     return render_to_response('bloom/users.html', {'users':users},
                               context_instance=RequestContext(request))  
