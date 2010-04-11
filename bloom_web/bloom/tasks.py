@@ -56,7 +56,7 @@ def process_individual_file(tag_file, game_file):
 
 
 class BloomGenerateStatistics(PeriodicTask):
-    run_every = timedelta(seconds=5)
+    run_every = timedelta(minutes=5)
 
     def run(self, **kwargs):
         logger = self.get_logger(**kwargs)
