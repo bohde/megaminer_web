@@ -122,7 +122,7 @@ class GameLog(models.Model):
             return None
         try:
             number, p1, p2 = read_tag_file(tag_file)
-        except IOError, User.DoesNotExist:
+        except (IOError, User.DoesNotExist):
             return None
 
         """Copy the file to the output directory"""
