@@ -7,7 +7,7 @@ from celery.log import get_default_logger
 from datetime import timedelta
 
 from django.conf import settings
-from models import GamePlayerInfo, GameLog
+from models import GamePlayerInfo, GameLog, UserStat
 
 import glob
 import contextlib
@@ -36,6 +36,9 @@ class BloomProcessFiles(PeriodicTask):
             tag_file = os.path.join(in_dir, tag_file)
             process_individual_file.delay(tag_file, game_file)
                    
+tasks.register(BloomProcessFiles)
+
+
 @task
 def process_individual_file(tag_file, game_file):
     logger = get_default_logger()
@@ -52,4 +55,11 @@ def process_individual_file(tag_file, game_file):
     return bool(gl)
 
 
-tasks.register(BloomProcessFiles)
+class BloomGenerateStatistics(PeriodicTask):
+    run_every = timedelta(seconds=5)
+
+    def run(self, **kwargs):
+        logger = self.get_logger(**kwargs)
+        UserStat.populate_stats()
+        
+tasks.register(BloomGenerateStatistics)

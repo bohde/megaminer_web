@@ -45,6 +45,7 @@ def read_tag_file(file_name):
 
         p1 = GamePlayerInfo.objects.create(player=(User.objects.get(username__iexact=p1_name)),
                                            winner=(winner_index==0))
+        
         Tag.objects.update_tags(p1, lines[1])
 
         p2 = GamePlayerInfo.objects.create(player=(User.objects.get(username__iexact=p2_name)),
@@ -53,9 +54,31 @@ def read_tag_file(file_name):
 
         return num, p1, p2
 
-class Stats(models.Model):
-    pass
+class UserStat(models.Model):
+    user = models.OneToOneField(User, related_name="stats")
+    games = models.IntegerField(default=0)
+    wins = models.IntegerField(default=0)
+    losses = models.IntegerField(default=0)
 
+    def __unicode__(self):
+        return "%s (%u/%u)" % (self.user.username, self.wins, self.games)
+
+    @staticmethod
+    def populate_stats():
+        for user in User.objects.all():
+            games, wins, losses = 0,0,0
+            stats, created = UserStat.objects.get_or_create(user=user)
+            for game in GameLog.mine_with_win(user):
+                games += 1
+                if game.win_status == "win":
+                    wins += 1
+                if game.win_status == "loss":
+                    losses += 1
+            stats.games = games
+            stats.wins = wins
+            stats.losses = losses
+            stats.save()
+            
 class GamePlayerInfo(models.Model):
     player = models.ForeignKey(User)
     winner = models.BooleanField()
@@ -84,13 +107,7 @@ class GameLog(models.Model):
             return None
 
     @staticmethod
-    def my_objects(user):
-        objs = GameLog.mine(user)
-        def add_tags(qs):
-            for q in qs:
-                q.tags = set(itertools.chain.from_iterable(p.tags for p in [q.p1, q.p2] if p.player==user))
-                yield q
-            return
+    def mine_with_win(user):
         def add_win_status(qs):
             for q in qs:
                 if q.p1.player==user and q.p2.player==user:
@@ -102,7 +119,17 @@ class GameLog(models.Model):
                         q.win_status = ["win", "loss"][q.p1.winner]
                 yield q
             return
-        return add_win_status(add_tags(objs))
+        return add_win_status(GameLog.mine(user))
+
+    @staticmethod
+    def my_objects(user):
+        objs = GameLog.mine_with_win(user)
+        def add_tags(qs):
+            for q in qs:
+                q.tags = set(itertools.chain.from_iterable(p.tags for p in [q.p1, q.p2] if p.player==user))
+                yield q
+            return
+        return add_tags(objs)
 
     @staticmethod
     def objects_with_tags():
