@@ -5,6 +5,7 @@ from models import GameLog
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User
 from django.http import HttpResponse
+from tagging.models import Tag
 import csv
 
 @login_required
@@ -30,9 +31,24 @@ def top_n_csv(request, n):
     writer.writerow([u.username for u in users])
     return response
 
+@login_required
 def versus(request, their_pk):
     them = get_object_or_404(User, pk=their_pk)
     logs = GameLog.ours_with_data(request.user, them)
     return render_to_response('bloom/list.html', {'logs':logs},
                               context_instance=RequestContext(request))  
-    
+
+@login_required    
+def tagged(request, tag_pk):
+    tag = Tag.objects.get(pk=tag_pk)
+    logs = GameLog.mine_with_tag(request.user, tag)
+    return render_to_response('bloom/list.html', {'logs':logs},
+                              context_instance=RequestContext(request))  
+
+@permission_required('bloom.view_all')
+def all_tagged(request, tag_pk):
+    tag = Tag.objects.get(pk=tag_pk)
+    logs = GameLog.all_with_tag(tag)
+    return render_to_response('bloom/list_all.html', {'logs':logs},
+                              context_instance=RequestContext(request))  
+
