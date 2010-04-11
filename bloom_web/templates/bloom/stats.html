@@ -3,7 +3,7 @@
 {% block content %}
 {% for stat in stats %}
 <div class="users">{{ stat.user.username }}<br>
-  <div class="tiny">wins: {{ stat.wins }} ratio: {{ stat.ratio }}</div>
+  <div class="tiny">wins: {{ stat.wins }} ratio: {{ stat.ratio }}%</div>
 </div>
 {% endfor %}
 {% endblock %}
