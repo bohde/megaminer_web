@@ -78,6 +78,12 @@ class UserStat(models.Model):
             stats.wins = wins
             stats.losses = losses
             stats.save()
+
+    def ratio(self):
+        if not(self.games):
+            return 0
+        else:
+            return int(100*float(self.wins)/self.games)
             
 class GamePlayerInfo(models.Model):
     player = models.ForeignKey(User)
