@@ -25,32 +25,6 @@ body {
     bottom: 0;
 }
 
-.links{
-    width: 724px;
-    margin-left: auto ;
-    margin-right: auto ;
-}
-
-.links .left {
-    margin: -14px 0 0 0;
-    padding: 0 0 0 0;
-}
-
-.links .left li {
-    display: inline;
-    border: 1px solid #719D00;
-    margin: 0 0 0 0;
-}
-
-.links .left a {
-    background-color: #D2F870;
-    color: #444444;
-    text-align: center;
-    font-size:1.1em;
-    padding: 0 4px 0 4px;
-    text-decoration:none;
-}
-
 .content{
     width: 720px;
     min-height: 500px;
@@ -85,13 +59,33 @@ body {
 .content .game {
     margin-bottom: 10px;
 }
+
 .content .tags{
     font-style: italic;
 }
-.content a {
+
+.content .tags a {
     background-color: #D2F870;
     color: #444444;
+}
+
+.content .tie,.win,.loss {
     font-size:1.25em;
+    color: #444444;
+}
+
+.tie {
+    background-color: #FFFD87;
+}
+.win {
+    background-color: #D2F870;
+}
+.loss {
+    background-color: #F70542;
+}
+
+.content .link {
+    text-size: 1.25em;
 }
 
 ul.errorlist {
