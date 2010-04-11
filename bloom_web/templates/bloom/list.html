@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% block title %}Game Logs{% endblock %}
-{% block head %}<a class="smalltitle" href="{% url logout %}">{{user.username}}({{ user.stats.ratio }}%)</a>{% endblock %}
 {% block content %}
 {% for log in logs %}
 <div class="game">

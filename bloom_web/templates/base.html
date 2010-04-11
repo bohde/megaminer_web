@@ -6,7 +6,11 @@
 </head>
 
 <body>
-  <div class="title">bloom{% block head %}{% endblock %}</div>
+  <div class="title">bloom
+    <a class="smalltitle" href="{% url logout %}">logout</a>
+    <a class="smalltitle" href="{% url top-competitors %}">top3</a>
+    <a class="smalltitle" href="{% url index %}">{{user.username}}({{ user.stats.ratio }}%)</a>
+  </div>
   <div class="content">
   {% block content %}{% endblock %}
   </div>
