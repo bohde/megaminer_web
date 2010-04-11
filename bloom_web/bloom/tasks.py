@@ -3,6 +3,7 @@
 from celery.decorators import task
 from celery.task import PeriodicTask
 from celery.registry import tasks
+from celery.log import get_default_logger
 from datetime import timedelta
 
 from django.conf import settings
@@ -37,6 +38,7 @@ class BloomProcessFiles(PeriodicTask):
                    
 @task
 def process_individual_file(tag_file, game_file):
+    logger = get_default_logger()
     gl = GameLog.create_new(game_file, tag_file)
     if gl:
         logger.debug("Game %u created." % gl.number)
