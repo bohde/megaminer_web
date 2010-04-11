@@ -122,9 +122,9 @@ class GameLog(models.Model):
             return None
         try:
             number, p1, p2 = read_tag_file(tag_file)
-        except IOError:
+        except IOError, GamePlayerInfo.DoesNotExist:
             return None
-        
+
         """Copy the file to the output directory"""
         new_file_location = os.path.join(out_dir, "%s.gamelog"%game_hash)
         shutil.move(log_file, new_file_location)
