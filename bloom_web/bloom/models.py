@@ -67,6 +67,9 @@ class GameLog(models.Model):
     p1 = models.OneToOneField(GamePlayerInfo, related_name='p1_log_set')
     p2 = models.OneToOneField(GamePlayerInfo, related_name='p2_log_set')
 
+    class Meta:
+        ordering = ["-id"]
+        
     def __unicode__(self):
         return "%s vs. %s" % (self.p1.player.username, self.p2.player.username)
 
