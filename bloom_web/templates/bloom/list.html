@@ -8,6 +8,6 @@
   <div class="tags">Tagged with{% for tag in log.tags %} <a href="#">{{tag}}</a>{% endfor %}.</div>
   <div class="tags">Games with <a href="{% url versus log.p1.player.pk %}">{{ log.p1.player.username }}</a>
    <a href="{% url versus log.p2.player.pk %}">{{ log.p2.player.username }}</a> 
-</div>
+</div></div>
 {% endfor %}
 {% endblock %}
